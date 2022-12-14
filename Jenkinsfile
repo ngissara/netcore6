@@ -26,9 +26,9 @@ pipeline {
                   sh 'cp -r /tmp/project .'    
                   sh 'pwd'
                   sh 'ls -ltr'
+                  sh 'cat project/buil.sh'
                   sh 'project/./buil.sh'
-                  sh 'ls -ltr'   
-                      //def file_in_workspace = inputGetFile('Jenkinsfile');
+                  //def file_in_workspace = inputGetFile('Jenkinsfile');
                   //sh 'dotnet build --source /tmp/project/HolaMundo.csproj -c Release'
                   //dotnet build --source /tmp/project/HolaMundo.csproj -c Release
                   sh 'sleep 5'
