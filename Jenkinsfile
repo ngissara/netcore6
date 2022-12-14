@@ -36,6 +36,19 @@ pipeline {
                 }
               }
         }
+        stage("paso 2"){
+            
+              steps {
+                  script {			
+                  sh "echo 'COMPILANDO'"   
+                  sh 'pwd'
+                  sh 'ls -ltr'
+                  sh 'project/./buil.sh'
+                  sh 'ls -ltr'   
+                  sh 'sleep 5'                     
+                }
+              }
+        }
     }
     post {
 
