@@ -23,8 +23,9 @@ pipeline {
                   sh 'cp -r ./project /tmp/'
                   sh 'ls -ltr /tmp/project'
                   sh 'sleep 5'
-                  //def file_in_workspace = inputGetFile('Jenkinsfile');
-                  sh 'dotnet build --source /tmp/project/HolaMundo.csproj -c Release'
+                  sh 'sh /tmp/project/./buil.sh'
+                      //def file_in_workspace = inputGetFile('Jenkinsfile');
+                  //sh 'dotnet build --source /tmp/project/HolaMundo.csproj -c Release'
                   //dotnet build --source /tmp/project/HolaMundo.csproj -c Release
                 }
               }
