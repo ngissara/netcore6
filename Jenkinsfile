@@ -43,8 +43,8 @@ pipeline {
                   script {			
                   sh "echo 'COMPILANDO'"   
                   sh 'pwd'
-                  sh 'ls -ltr'
-                  sh '/tmp/project/./buil.sh'
+                  sh 'ls -ltr ./project'
+                  //sh '/tmp/project/./buil.sh'
                   sh 'ls -ltr'   
                   sh 'sleep 5'                     
                 }
