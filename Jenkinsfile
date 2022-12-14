@@ -18,11 +18,11 @@ pipeline {
                   sh "echo 'hola mundo desde GIT'"
                   sh "pwd"
                   sh "ls -ltr"
-                  sh 'sleep 30'
+                  
                   //sh 'dotnet build --source project/HolaMundo.csproj -c Release'
                   sh 'cp -r ./project /tmp/'
                   sh 'ls -ltr /tmp/project'
-                  
+                  sh 'sleep 5'
                   //def file_in_workspace = inputGetFile('Jenkinsfile');
 
                 }
