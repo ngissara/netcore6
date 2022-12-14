@@ -27,7 +27,8 @@ pipeline {
                   sh 'pwd'
                   sh 'ls -ltr'
                   sh 'cat project/buil.sh'
-                  sh 'project/./buil.sh'
+                  sh 'dotnet --version'                  
+                      //sh 'project/./buil.sh'
                   //def file_in_workspace = inputGetFile('Jenkinsfile');
                   //sh 'dotnet build --source /tmp/project/HolaMundo.csproj -c Release'
                   //dotnet build --source /tmp/project/HolaMundo.csproj -c Release
@@ -43,7 +44,7 @@ pipeline {
                   sh "echo 'COMPILANDO'"   
                   sh 'pwd'
                   sh 'ls -ltr'
-                  sh 'project/./buil.sh'
+                  sh '/tmp/project/./buil.sh'
                   sh 'ls -ltr'   
                   sh 'sleep 5'                     
                 }
