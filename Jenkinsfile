@@ -19,8 +19,9 @@ pipeline {
                   sh "pwd"
                   sh "ls -ltr"
                   sh 'sleep 30'
-                  sh 'dotnet build --source HolaMundo.csproj -c Release'
-                  sh 'ls -ltr'
+                  //sh 'dotnet build --source project/HolaMundo.csproj -c Release'
+                  sh 'cp -r ./project /tmp/'
+                  sh 'ls -ltr /tmp/project'
                   
                   //def file_in_workspace = inputGetFile('Jenkinsfile');
 
