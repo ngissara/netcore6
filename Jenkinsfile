@@ -11,42 +11,29 @@ pipeline {
     }
     stages {
 
-        stage("paso 1"){
-            
+        stage("Paso 1 - Lectura de parametros"){          
               steps {
                   script {			
                   sh "echo 'hola mundo desde GIT'"
                   sh "pwd"
                   sh "ls -ltr"
-                  
-                  //sh 'dotnet build --source project/HolaMundo.csproj -c Release'
-                  sh 'cp -r ./project /tmp/'
-                  sh 'ls -ltr /tmp/project'
-                  
-                  sh 'cp -r /tmp/project .'    
-                  sh 'pwd'
-                  sh 'ls -ltr'
-                  sh 'cat project/buil.sh'
-                  sh 'dotnet --version'                  
-                      //sh 'project/./buil.sh'
-                  //def file_in_workspace = inputGetFile('Jenkinsfile');
-                  //sh 'dotnet build --source /tmp/project/HolaMundo.csproj -c Release'
-                  //dotnet build --source /tmp/project/HolaMundo.csproj -c Release
-                  sh 'sleep 5'
+                  sh "##################Aca podemos hacer lectura de algunos parametros -- ##################"
+      
                       
                 }
               }
         }
-        stage("paso 2"){
+        stage("paso 2 - Compilacion de codigo"){
             
               steps {
                   script {			
-                  sh "echo 'COMPILANDO'"   
+                  sh "echo 'COMPILANDO CODIGO'"   
                   sh 'pwd'
-                  sh 'ls -ltr ./project'
-                  //sh '/tmp/project/./buil.sh'
+                  sh 'ls -ltr'
+                  sh 'javac HolaMundo.java'
                   sh 'ls -ltr'   
-                  sh 'sleep 5'                     
+                  sh 'sleep 5'             
+                  sh ''    
                 }
               }
         }
