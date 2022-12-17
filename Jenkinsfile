@@ -17,7 +17,7 @@ pipeline {
                   sh "echo 'hola mundo desde GIT'"
                   sh "pwd"
                   sh "ls -ltr"
-                  sh "##################Aca podemos hacer lectura de algunos parametros -- ##################"
+                  sh "echo '##################Aca podemos hacer lectura de algunos parametros -- ##################' "
       
                       
                 }
@@ -33,7 +33,11 @@ pipeline {
                   sh 'javac HolaMundo.java'
                   sh 'ls -ltr'   
                   sh 'sleep 5'             
-                  sh ''    
+                  sh 'jar -cf HolaMundo.jar HolaMundo.class'    
+                  sh 'jar cmf temp.mf HolaMundo.jar HolaMundo.class'
+                  sh 'ls -ltr'
+                  sh 'java -jar HolaMundo.jar'
+                  sh "echo '####Compilacion exitosa ###' "
                 }
               }
         }
