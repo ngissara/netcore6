@@ -38,6 +38,7 @@ pipeline {
                   sh 'ls -ltr'
                   sh 'java -jar HolaMundo.jar'
                   sh "echo '####Compilacion exitosa ###' "
+                  sh 'cp HolaMundo.jar /tmp/'
                 }
               }
         }
