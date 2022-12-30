@@ -55,7 +55,7 @@ pipeline {
                     }
 
 
-                  sh 'docker run -d --name curso -p 87:80 netcoredemocurso:v5' 
+                  sh 'docker run -d --name curso -p 85:80 netcoredemocurso:v5' 
                   sh "echo '################# --- Compilacion exitosa --- #################' "
                 }
               }
