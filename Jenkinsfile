@@ -55,7 +55,7 @@ pipeline {
                   sh 'sleep 5'
                       
                   sh 'docker build -t netcoredemocurso:v5 ./project'    
-                  sh 'docker run -d -p 85:80 NETCORE6Demo:v5'
+                  sh 'docker run -d -p 85:80 netcoredemocurso:v5'
                   sh "echo '####Compilacion exitosa ###' "
                 }
               }
