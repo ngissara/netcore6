@@ -45,7 +45,9 @@ pipeline {
                   script {			
                   sh "echo '####################  --- COMPILANDO CODIGO NET CORE 6 --- ###########################'"                                 
                   sh 'docker build -t netcoredemocurso:v5 ./project'    
-                  sh 'docker run -d -p 86:80 netcoredemocurso:v5'
+                  sh 'docker kill curso'
+                  sh 'docker rm curso'
+                  sh 'docker run -d --name curso -p 87:80 netcoredemocurso:v5' 
                   sh "echo '################# --- Compilacion exitosa --- #################' "
                 }
               }
