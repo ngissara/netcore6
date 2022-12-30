@@ -45,8 +45,16 @@ pipeline {
                   script {			
                   sh "echo '####################  --- COMPILANDO CODIGO NET CORE 6 --- ###########################'"                                 
                   sh 'docker build -t netcoredemocurso:v5 ./project'    
-                  sh 'docker kill curso'
-                  sh 'docker rm curso'
+
+                    try {
+                        sh 'docker kill curso'
+                        sh 'docker rm curso'
+                    } catch (Exception e) {
+                        echo 'Exception occurred: ' + e.toString()
+                        sh 'Handle the exception!'
+                    }
+
+
                   sh 'docker run -d --name curso -p 87:80 netcoredemocurso:v5' 
                   sh "echo '################# --- Compilacion exitosa --- #################' "
                 }
