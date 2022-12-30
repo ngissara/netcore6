@@ -59,7 +59,7 @@
             "Cpu": 0
           }
         ],
-        "Family": "Family4",
+        "Family": "DefinicionCursoTestV1",
         "NetworkMode": "bridge",
         "ExecutionRoleArn": "arn:aws:iam::134383757275:role/ecsTaskExecutionRole",
         "PlacementConstraints": [],
