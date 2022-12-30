@@ -68,7 +68,7 @@ pipeline {
                   sh "echo Login a AWS"
                   sh "aws sts get-caller-identity"
                   sh "aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 134383757275.dkr.ecr.us-east-1.amazonaws.com"                           
-                  sh 'docker tag netcoredemocurso:v5 134383757275.dkr.ecr.us-east-1.amazonaws.com/juantestrepo1:netcoredemocurso-v6'    
+                  sh 'docker tag netcoredemocurso:v6 134383757275.dkr.ecr.us-east-1.amazonaws.com/juantestrepo1:netcoredemocurso-v6'    
                   sh 'docker push 134383757275.dkr.ecr.us-east-1.amazonaws.com/juantestrepo1:netcoredemocurso-v6'
                   sh "echo '################# --- Compilacion exitosa --- #################' "
                   sh "echo '############################ Creacion de stack definicion de tareas ###############################'"
