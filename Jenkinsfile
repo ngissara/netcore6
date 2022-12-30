@@ -49,10 +49,12 @@ pipeline {
                   sh "echo 'COMPILANDO CODIGO'"   
                   sh 'pwd'
                   sh 'ls -ltr'
-                  sh 'cd project'
+                  sh 'cd ./project'
                   sh 'ls -ltr'   
-                  sh 'sleep 5'             
-                  sh 'docker build -t NETCORE6Demo:v5 .'    
+                  sh 'pwd'
+                  sh 'sleep 5'
+                      
+                  sh 'docker build -t netcoredemocurso:v5 .'    
                   sh 'docker run -d -p 85:80 NETCORE6Demo:v5'
                   sh "echo '####Compilacion exitosa ###' "
                 }
