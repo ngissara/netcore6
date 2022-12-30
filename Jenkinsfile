@@ -51,7 +51,7 @@ pipeline {
                         sh 'docker rm curso'
                     } catch (Exception e) {
                         echo 'Exception occurred: ' + e.toString()
-                        sh 'Handle the exception!'
+                        //sh 'Handle the exception!'
                     }
 
 
