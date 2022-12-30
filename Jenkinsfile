@@ -55,7 +55,7 @@ pipeline {
                     }
 
 
-                  sh 'docker run -d --name curso -p 85:80 netcoredemocurso:v5' 
+                  sh 'docker run -d --name curso -p 87:80 netcoredemocurso:v5' 
                   sh "echo '################# --- Compilacion exitosa --- #################' "
                 }
               }
@@ -72,6 +72,8 @@ pipeline {
                   sh 'docker tag netcoredemocurso:v5 134383757275.dkr.ecr.us-east-1.amazonaws.com/juantestrepo1:netcoredemocurso-v5'    
                   sh 'docker push 134383757275.dkr.ecr.us-east-1.amazonaws.com/juantestrepo1:netcoredemocurso-v5'
                   sh "echo '################# --- Compilacion exitosa --- #################' "
+                  sh "echo '############################ Creacion de stack definicion de tareas ###############################'"
+                  sh "aws cloudformation create-stack --stack-name mystacktestv1 --template-body file://infra.json"
                 }
               }
         }
