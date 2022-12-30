@@ -15,11 +15,9 @@ pipeline {
               steps {
                   script {			
                   sh "echo 'hola mundo desde GIT'"
-                  sh "pwd"
-                  sh "ls -ltr"
-                  sh "echo '##################Aca podemos hacer lectura de algunos parametros -- ##################' "
-      
-                      
+                  //sh "pwd"
+                  //sh "ls -ltr"
+                  sh "echo '##################Aca podemos hacer lectura de algunos parametros -- ##################' "                     
                 }
               }
         }
@@ -29,13 +27,12 @@ pipeline {
                   script {			
                   sh "echo 'COMPILANDO CODIGO'"   
                   sh 'pwd'
-                  sh 'ls -ltr'
+                  //sh 'ls -ltr'
                   sh 'javac HolaMundo.java'
-                  sh 'ls -ltr'   
-                  sh 'sleep 5'             
+                  //sh 'ls -ltr'   
+                  //sh 'sleep 5'             
                   sh 'jar -cf HolaMundo.jar HolaMundo.class'    
                   sh 'jar cmf temp.mf HolaMundo.jar HolaMundo.class'
-                  sh 'ls -ltr'
                   sh 'java -jar HolaMundo.jar'
                   sh "echo '####Compilacion exitosa ###' "
                   sh 'cp HolaMundo.jar /tmp/'
@@ -46,20 +43,29 @@ pipeline {
             
               steps {
                   script {			
-                  sh "echo 'COMPILANDO CODIGO'"   
-                  sh 'pwd'
-                  sh 'ls -ltr'
-                  //sh 'cd ./project'
-                  sh 'ls -ltr'   
-                  sh 'pwd'
-                  sh 'sleep 5'
-                      
+                  sh "echo '####################  --- COMPILANDO CODIGO NET CORE 6 --- ###########################'"                                 
                   sh 'docker build -t netcoredemocurso:v5 ./project'    
                   sh 'docker run -d -p 86:80 netcoredemocurso:v5'
-                  sh "echo '####Compilacion exitosa ###' "
+                  sh "echo '################# --- Compilacion exitosa --- #################' "
                 }
               }
         }
+
+         stage("paso 4 - Cargar imagen docker a AWS ECR"){
+            
+              steps {
+                  script {			
+                  sh "echo '####################  --- Cargar imagen docker a AWS ECR --- ###########################'"      
+                  sh "echo Login a AWS"
+                  sh "aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 134383757275.dkr.ecr.us-east-1.amazonaws.com"                           
+                  sh 'docker tag netcoredemocurso:v5 134383757275.dkr.ecr.us-east-1.amazonaws.com/juantestrepo1:netcoredemocurso-v5'    
+                  sh 'docker push 134383757275.dkr.ecr.us-east-1.amazonaws.com/juantestrepo1:netcoredemocurso-v5'
+                  sh "echo '################# --- Compilacion exitosa --- #################' "
+                }
+              }
+        }
+
+
     }
     post {
 
