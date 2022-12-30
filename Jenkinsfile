@@ -67,6 +67,9 @@ pipeline {
                   script {			
                   sh "echo '####################  --- Cargar imagen docker a AWS ECR --- ###########################'"      
                   sh "echo Login a AWS"
+                  sh "export AWS_ACCESS_KEY_ID=AKIAR6SPFM7N6NBRW2GQ"
+                  sh "export AWS_SECRET_ACCESS_KEY=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"
+                  sh "export AWS_DEFAULT_REGION=us-east-1"
                   sh "aws sts get-caller-identity"
                   sh "aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 134383757275.dkr.ecr.us-east-1.amazonaws.com"                           
                   sh 'docker tag netcoredemocurso:v5 134383757275.dkr.ecr.us-east-1.amazonaws.com/juantestrepo1:netcoredemocurso-v5'    
