@@ -21,8 +21,7 @@ pipeline {
                 }
               }
         }
-        stage("paso 2 - Compilacion de codigo"){
-            
+        stage("paso 2 - Compilacion de codigo"){       
               steps {
                   script {			
                   sh "echo 'COMPILANDO CODIGO'"   
@@ -44,7 +43,7 @@ pipeline {
               steps {
                   script {			
                   sh "echo '####################  --- COMPILANDO CODIGO NET CORE 6 --- ###########################'"                                 
-                  sh 'docker build -t netcoredemocurso:v5 ./project'    
+                  sh 'docker build -t netcoredemocurso:v6 ./project'    
 
                     try {
                         sh 'docker kill curso'
@@ -55,7 +54,7 @@ pipeline {
                     }
 
 
-                  sh 'docker run -d --name curso -p 87:80 netcoredemocurso:v5' 
+                  sh 'docker run -d --name curso -p 87:80 netcoredemocurso:v6' 
                   sh "echo '################# --- Compilacion exitosa --- #################' "
                 }
               }
@@ -69,8 +68,8 @@ pipeline {
                   sh "echo Login a AWS"
                   sh "aws sts get-caller-identity"
                   sh "aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 134383757275.dkr.ecr.us-east-1.amazonaws.com"                           
-                  sh 'docker tag netcoredemocurso:v5 134383757275.dkr.ecr.us-east-1.amazonaws.com/juantestrepo1:netcoredemocurso-v5'    
-                  sh 'docker push 134383757275.dkr.ecr.us-east-1.amazonaws.com/juantestrepo1:netcoredemocurso-v5'
+                  sh 'docker tag netcoredemocurso:v5 134383757275.dkr.ecr.us-east-1.amazonaws.com/juantestrepo1:netcoredemocurso-v6'    
+                  sh 'docker push 134383757275.dkr.ecr.us-east-1.amazonaws.com/juantestrepo1:netcoredemocurso-v6'
                   sh "echo '################# --- Compilacion exitosa --- #################' "
                   sh "echo '############################ Creacion de stack definicion de tareas ###############################'"
                   sh "aws cloudformation create-stack --stack-name mystacktestv1 --template-body file://infra.json"
