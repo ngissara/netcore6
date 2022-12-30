@@ -1,0 +1,94 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "The template used to create an ECS Task definition from the ECS Console.",
+  "Resources": {
+    "ECSTaskDefinition": {
+      "Type": "AWS::ECS::TaskDefinition",
+      "Properties": {
+        "ContainerDefinitions": [
+          {
+            "DockerLabels": {},
+            "Name": "API-REST-NETCORE-6-v2",
+            "Image": "134383757275.dkr.ecr.us-east-1.amazonaws.com/juantestrepo1:netcoredemocurso-v5",
+            "Links": [],
+            "PortMappings": [
+              {
+                "ContainerPort": 80,
+                "HostPort": 82,
+                "Protocol": "tcp"
+              }
+            ],
+            "EntryPoint": [],
+            "Command": [],
+            "EnvironmentFiles": [],
+            "MountPoints": [],
+            "VolumesFrom": [],
+            "DnsServers": [],
+            "DnsSearchDomains": [],
+            "ExtraHosts": [],
+            "DockerSecurityOptions": [],
+            "Ulimits": [],
+            "SystemControls": [],
+            "Essential": true,
+            "Cpu": 0
+          },
+          {
+            "DockerLabels": {},
+            "Name": "API-REST-NETCORE-6-2",
+            "Image": "134383757275.dkr.ecr.us-east-1.amazonaws.com/juantestrepo1:netcoredemocurso-v5",
+            "Links": [],
+            "PortMappings": [
+              {
+                "ContainerPort": 80,
+                "HostPort": 83,
+                "Protocol": "tcp"
+              }
+            ],
+            "EntryPoint": [],
+            "Command": [],
+            "EnvironmentFiles": [],
+            "MountPoints": [],
+            "VolumesFrom": [],
+            "DnsServers": [],
+            "DnsSearchDomains": [],
+            "ExtraHosts": [],
+            "DockerSecurityOptions": [],
+            "Ulimits": [],
+            "SystemControls": [],
+            "Essential": false,
+            "Cpu": 0
+          }
+        ],
+        "Family": "Family4",
+        "NetworkMode": "bridge",
+        "ExecutionRoleArn": "arn:aws:iam::134383757275:role/ecsTaskExecutionRole",
+        "PlacementConstraints": [],
+        "RequiresCompatibilities": [
+          "EC2"
+        ],
+        "Cpu": "1 vCPU",
+        "Memory": "1 GB",
+        "RuntimePlatform": {
+          "CpuArchitecture": "X86_64",
+          "OperatingSystemFamily": "LINUX"
+        },
+        "Tags": [
+          {
+            "Key": "ecs:taskDefinition:stackId",
+            "Value": {
+              "Ref": "AWS::StackId"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "Outputs": {
+    "TaskDefinitionARN": {
+      "Description": "The created task definition ARN.",
+      "Value": {
+        "Ref": "ECSTaskDefinition"
+      }
+    }
+  }
+}
