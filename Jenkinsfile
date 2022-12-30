@@ -42,7 +42,7 @@ pipeline {
                 }
               }
         }
-         stage("paso 2 - Compilacion de codigo"){
+         stage("paso 3 - Compilacion de codigo en docker"){
             
               steps {
                   script {			
