@@ -85,7 +85,7 @@ pipeline {
                      sh "echo aws cloudformation create-stack --stack-name mystacktestv1 --template-body file://infra.json --parameters ParameterKey=ParametroUno,ParameterValue=${ParametroUno} ParameterKey=ParametroDos,ParameterValue=${ParametroDos}"
                      sh "aws cloudformation create-stack --stack-name mystacktestv1 --template-body file://infra.json --parameters ParameterKey=ParametroUno,ParameterValue=${ParametroUno} ParameterKey=ParametroDos,ParameterValue=${ParametroDos}"
                   } catch (Exception e) {
-                     sh "aws cloudformation create-stack --stack-name mystacktestv1 --template-body file://infra.json --parameters ParameterKey=ParametroUno,ParameterValue=${ParametroUno} ParameterKey=ParametroDos,ParameterValue=${ParametroDos}"
+                     sh "aws cloudformation update-stack --stack-name mystacktestv1 --template-body file://infra.json --parameters ParameterKey=ParametroUno,ParameterValue=${ParametroUno} ParameterKey=ParametroDos,ParameterValue=${ParametroDos}"
                   }   
                       
                      
