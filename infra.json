@@ -1,6 +1,16 @@
 {
     "AWSTemplateFormatVersion": "2010-09-09",
     "Description": "The template used to create an ECS Task definition from the ECS Console.",
+	"Parameters": {
+		"ParametroUno": {
+		   "Type": "String",
+		   "Description": "Optional"
+		},
+			"ParametroDos": {
+			"Type": "String",
+			"Description": "Optional"
+		}
+	},
     "Resources": {
         "ECSTaskDefinition": {
             "Type": "AWS::ECS::TaskDefinition",
