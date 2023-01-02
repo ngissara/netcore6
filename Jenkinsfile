@@ -22,8 +22,8 @@ pipeline {
                   //sh "pwd"
                   //sh "ls -ltr"
                   sh "echo '##################Aca podemos hacer lectura de algunos parametros -- ##################' "      
-                  ParametroUno="Esto es el valor del parametro uno";
-                  ParametroDos="Este es el valor del parametros dos";
+                  ParametroUno="Esto es el valor del parametro uno ...";
+                  ParametroDos="Este es el valor del parametros dos ...";
                       
                 }
               }
