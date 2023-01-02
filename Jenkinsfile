@@ -3,6 +3,10 @@ import groovy.json.JsonSlurperClassic
 def jsonParse(def json) {
     new groovy.json.JsonSlurperClassic().parseText(json)
 }
+
+def ParametroUno
+def ParametroDos
+
 pipeline {
 
     agent any 
@@ -17,7 +21,10 @@ pipeline {
                   sh "echo 'hola mundo desde GIT'"
                   //sh "pwd"
                   //sh "ls -ltr"
-                  sh "echo '##################Aca podemos hacer lectura de algunos parametros -- ##################' "                     
+                  sh "echo '##################Aca podemos hacer lectura de algunos parametros -- ##################' "      
+                  ParametroUno="Esto es el valor del parametro uno";
+                  ParametroDos="Este es el valor del parametros dos";
+                      
                 }
               }
         }
@@ -72,7 +79,16 @@ pipeline {
                   sh 'docker push 134383757275.dkr.ecr.us-east-1.amazonaws.com/juantestrepo1:netcoredemocurso-v6'
                   sh "echo '################# --- Compilacion exitosa --- #################' "
                   sh "echo '############################ Creacion de stack definicion de tareas ###############################'"
-                  sh "aws cloudformation create-stack --stack-name mystacktestv1 --template-body file://infra.json"
+                  
+                  
+                  try {
+                     aws cloudformation update-stack --stack-name mystacktestv1 --template-body file://infra.json --parameters ParameterKey=ParametroUno,ParameterValue=test1 ParameterKey=ParametroDos,ParameterValue=test2 
+                  } catch (Exception e) {
+                     sh "aws cloudformation create-stack --stack-name mystacktestv1 --template-body file://infra.json --parameters ParameterKey=ParametroUno,ParameterValue=${ParametroUno} ParameterKey=ParametroDos,ParameterValue=${ParametroDos}"
+                  }   
+                      
+                     
+                      
                 }
               }
         }
