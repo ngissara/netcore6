@@ -22,8 +22,8 @@ pipeline {
                   //sh "pwd"
                   //sh "ls -ltr"
                   sh "echo '##################Aca podemos hacer lectura de algunos parametros -- ##################' "      
-                  ParametroUno="Esto es el valor del parametro uno ...";
-                  ParametroDos="Este es el valor del parametros dos ...";
+                  ParametroUno="Esto es el valor del parametro uno";
+                  ParametroDos="Este es el valor del parametros dos";
                       
                 }
               }
@@ -80,12 +80,12 @@ pipeline {
                   sh "echo '################# --- Compilacion exitosa --- #################' "
                   sh "echo '############################ Creacion de stack definicion de tareas ###############################'"
                   
-                  
+                  sh "echo aws cloudformation update-stack --stack-name mystacktestv1 --template-body file://infra.json --parameters ParameterKey=ParametroUno,ParameterValue=test1 ParameterKey=ParametroDos,ParameterValue=test2"
                   try {
-                     sh "echo aws cloudformation create-stack --stack-name mystacktestv1 --template-body file://infra.json --parameters ParameterKey=ParametroUno,ParameterValue=${ParametroUno} ParameterKey=ParametroDos,ParameterValue=${ParametroDos}"
-                     sh "aws cloudformation create-stack --stack-name mystacktestv1 --template-body file://infra.json --parameters ParameterKey=ParametroUno,ParameterValue=${ParametroUno} ParameterKey=ParametroDos,ParameterValue=${ParametroDos}"
+                     sh "echo aws cloudformation create-stack --stack-name mystacktestv1 --template-body file://infra.json --parameters ParameterKey=ParametroUno,ParameterValue='${ParametroUno}' ParameterKey=ParametroDos,ParameterValue=${ParametroDos}"
+                     sh "aws cloudformation create-stack --stack-name mystacktestv1 --template-body file://infra.json --parameters ParameterKey=ParametroUno,ParameterValue='${ParametroUno}' ParameterKey=ParametroDos,ParameterValue='${ParametroDos}'"
                   } catch (Exception e) {
-                     sh "aws cloudformation update-stack --stack-name mystacktestv1 --template-body file://infra.json --parameters ParameterKey=ParametroUno,ParameterValue=${ParametroUno} ParameterKey=ParametroDos,ParameterValue=${ParametroDos}"
+                     sh "aws cloudformation update-stack --stack-name mystacktestv1 --template-body file://infra.json --parameters ParameterKey=ParametroUno,ParameterValue='${ParametroUno}' ParameterKey=ParametroDos,ParameterValue='${ParametroDos}'"
                   }   
                       
                      
