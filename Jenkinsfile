@@ -136,8 +136,8 @@ pipeline {
                   script {			
                   sh "echo '####################  --- Actualizar servicio se pasa el valor de la nueva definicion de tareas --- ###########################'"      
                    try {
-                     sh "echo aws cloudformation update-stack --stack-name ECS-Console-V2-Service-320872f3-1a3f-489b-af7a-bd36bf6b6e93 --template-body file://infra_service_albalancer_ecs.json --parameters ParameterKey=ParametroUno,ParameterValue='\$taskDef' ParameterKey=ParametroDos,ParameterValue='${ParametroDos}'"
-                     sh "aws cloudformation update-stack --stack-name ECS-Console-V2-Service-320872f3-1a3f-489b-af7a-bd36bf6b6e93 --template-body file://infra_service_albalancer_ecs.json --parameters ParameterKey=ParametroUno,ParameterValue='${task}' ParameterKey=ParametroDos,ParameterValue='${ParametroDos}'"
+                     sh "echo aws cloudformation update-stack --stack-name ECS-Console-V2-Service-320872f3-1a3f-489b-af7a-bd36bf6b6e93 --template-body file://infra_service_albalancer_ecs.json --parameters ParameterKey=ParametroUno,ParameterValue='${task}' ParameterKey=ParametroDos,ParameterValue='${ParametroDos}'"
+                     sh "aws cloudformation update-stack --stack-name ECS-Console-V2-Service-320872f3-1a3f-489b-af7a-bd36bf6b6e93 --template-body file://infra_service_albalancer_ecs.json --parameters ParameterKey=ParametroUno,ParameterValue='${task}'"
                   } catch (Exception e) {
 
                   }   
