@@ -80,7 +80,7 @@ pipeline {
                   script {			
                       sh "echo '####################  --- COMPILANDO CODIGO NET CORE 6 --- ###########################'"      
                       sh "echo '####################  --- TOMA LA Configuracion del dockerbuild y genera una imagen nueva a partir de esa conf y el nombre que se pasa  --- ###########################'"    
-                      sh 'docker build -t netcoredemocurso:${BUILDVERSION} ./project'    
+                      sh "docker build -t netcoredemocurso:${BUILDVERSION} ./project"    
 
                          //   try {
                          //       sh 'docker kill curso'
@@ -91,7 +91,7 @@ pipeline {
                          //   }
                          //BUILDVERSION    
                          //Toma la imagen creada y le coloca el nombre "curso" al docker para identificar ese docker y lo arranca
-                         //  sh 'docker run -d --name curso -p 85:80 netcoredemocurso:${BUILDVERSION}' 
+                         //  sh "docker run -d --name curso -p 85:80 netcoredemocurso:${BUILDVERSION}"
                       sh "echo '################## --- Compilacion exitosa --- #################' "
                 }
               }
