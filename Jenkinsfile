@@ -26,7 +26,7 @@ pipeline {
                   sh "echo 'hola mundo desde GIT'"
                    try {
                      def BUILDVERSION = sh(script: "echo `date +%s`", returnStdout: true).trim()
-                     sh "echo ${BUILDVERSION}"  
+                     sh "echo fecha: ${BUILDVERSION}"  
                   } catch (Exception e) {
                      sh "echo error capturando arn definicion de tareas"
                      sh 'Handle the exception!'
