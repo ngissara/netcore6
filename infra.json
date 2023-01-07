@@ -19,7 +19,7 @@
                     {
                         "DockerLabels": {},
                         "Name": "API-REST-NETCORE-6-v2",
-                        "Image": !Ref ParametroUno,
+                        "Image": { "Ref": "ParametroUno" },
                         "Links": [],
                         "PortMappings": [
                             {
