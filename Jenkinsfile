@@ -25,10 +25,10 @@ pipeline {
                   sh "echo 'hola mundo desde GIT'"
                    try {
                      sh "demo=\$(aws cloudformation describe-stacks --stack-name mystacktestv1 --query Stacks[0].Outputs[0].OutputValue --output text)"
-                     sh "${taskDefinition}=$demo"
-                     sh "echo ${taskDefinition}"
+                     //sh "${taskDefinition}=$demo"
+                     //sh "echo ${taskDefinition}"
                      sh "echo demo demo"
-                     sh "echo ${taskDefinition}"
+                     //sh "echo ${taskDefinition}"
                   } catch (Exception e) {
                      sh "echo error capturando arn definicion de tareas"
                      sh 'Handle the exception!'
