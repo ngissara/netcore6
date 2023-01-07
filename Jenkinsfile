@@ -108,9 +108,9 @@ pipeline {
                   sh "aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 134383757275.dkr.ecr.us-east-1.amazonaws.com" 
                   //Si en el reposotirio ECR se tiene habilitado la opcion Tag immutability, se debe generar siempre un nuevo nombre o tag a la imagen
                   //Aca se toma la imagen creada en local y se tagea para que ecr la reconozca     
-                  sh 'docker tag netcoredemocurso:${BUILDVERSION} 134383757275.dkr.ecr.us-east-1.amazonaws.com/juantestrepo1:netcoredemocurso-${BUILDVERSION}'    
+                  sh "docker tag netcoredemocurso:${BUILDVERSION} 134383757275.dkr.ecr.us-east-1.amazonaws.com/juantestrepo1:netcoredemocurso-${BUILDVERSION}"    
                   //Se carga la imagen, se identifica de acuerdo al tag generado    
-                  sh 'docker push 134383757275.dkr.ecr.us-east-1.amazonaws.com/juantestrepo1:netcoredemocurso-${BUILDVERSION}'
+                  sh "docker push 134383757275.dkr.ecr.us-east-1.amazonaws.com/juantestrepo1:netcoredemocurso-${BUILDVERSION}"
                   sh "echo '################# --- Compilacion exitosa --- #################' "
                   sh "echo '############################ Creacion de stack definicion de tareas ###############################'"
                   
