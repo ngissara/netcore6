@@ -26,7 +26,7 @@ namespace HolaMundo.Controllers
                 Date = DateTime.Now.AddDays(index),
                 TemperatureC = Random.Shared.Next(-20, 55),
                 Summary = Summaries[Random.Shared.Next(Summaries.Length)],
-                Value= "Cambio 1"
+                Value= "Cambio ejemplo demo curso nuevo build xxxxxxxxxxxxx.."
             })
             .ToArray();
         }
