@@ -2,6 +2,10 @@
   "AWSTemplateFormatVersion": "2010-09-09",
   "Description": "The template used to create an ECS Service from the ECS Console.",
   "Parameters": {
+    "ParametroUno": {
+		   "Type": "String",
+		   "Description": "Optional"
+		},
     "ECSClusterName": {
       "Type": "String",
       "Default": "ClusterCurso"
@@ -28,7 +32,7 @@
       "Type": "AWS::ECS::Service",
       "Properties": {
         "Cluster": "ClusterCurso",
-        "TaskDefinition": "arn:aws:ecs:us-east-1:134383757275:task-definition/DefinicionCursoTestV1:1",
+        "TaskDefinition": { "Ref": "ParametroUno" },
         "LaunchType": "EC2",
         "ServiceName": "ServicioUnoCurso",
         "SchedulingStrategy": "REPLICA",
