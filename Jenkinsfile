@@ -88,9 +88,10 @@ pipeline {
                   } catch (Exception e) {
                      sh "aws cloudformation update-stack --stack-name mystacktestv1 --template-body file://infra.json --parameters ParameterKey=ParametroUno,ParameterValue='${ParametroUno}' ParameterKey=ParametroDos,ParameterValue='${ParametroDos}'"
                   }   
+                 sh "sleep 20"     
                  sh "echo ################ -- ver nueva definicion de tarea --####################"
                  sh "taskDefinition=\$(aws cloudformation describe-stacks --stack-name mystacktestv1 --query Stacks[0].Outputs[0].OutputValue --output text)"           
-                 sh "echo \$taskDefinition"     
+                 sh "echo $taskDefinition"     
                 }
               }
         }
