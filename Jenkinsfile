@@ -15,6 +15,26 @@ pipeline {
         appName = "variable" 
     }
     stages {
+        
+
+        
+        
+                stage("Paso 0 - Lectura de output"){          
+              steps {
+                  script {			
+                  sh "echo 'hola mundo desde GIT'"
+                   try {
+                     taskDefinition=sh "aws cloudformation describe-stacks --stack-name mystacktestv1 --query "Stacks[0].Outputs[0].TaskDefinitionARN" --output text"
+                     sh "echo ${taskDefinition}"
+                  } catch (Exception e) {
+                     sh "echo error capturando arn definicion de tareas"
+                     sh 'Handle the exception!'
+                  }
+                    sh 'Handle the exception!'
+                }
+              }
+        }
+        
 
         stage("Paso 1 - Lectura de parametros"){          
               steps {
