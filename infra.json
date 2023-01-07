@@ -19,7 +19,7 @@
                     {
                         "DockerLabels": {},
                         "Name": "API-REST-NETCORE-6-v2",
-                        "Image": "134383757275.dkr.ecr.us-east-1.amazonaws.com/juantestrepo1:netcoredemocurso-v5",
+                        "Image": "134383757275.dkr.ecr.us-east-1.amazonaws.com/juantestrepo1:netcoredemocurso-v6",
                         "Links": [],
                         "PortMappings": [
                             {
