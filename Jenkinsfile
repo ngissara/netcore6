@@ -26,7 +26,11 @@ pipeline {
                   sh "echo 'hola mundo desde GIT'"
                    try {
                      def BUILDVERSION = sh(script: "echo `date +%s`", returnStdout: true).trim()
-                     sh "echo fecha: ${BUILDVERSION}"  
+                     //sh "taskDef=\$(aws cloudformation describe-stacks --stack-name mystacktestv1 --query Stacks[0].Outputs[0].OutputValue --output text)"  
+                     def task= sh(script: "aws cloudformation describe-stacks --stack-name mystacktestv1 --query Stacks[0].Outputs[0].OutputValue --output text", returnStdout: true).trim()
+                     sh "echo fecha: ${BUILDVERSION}"
+                     sh "echo task: ${task}"
+                       
                   } catch (Exception e) {
                      sh "echo error capturando arn definicion de tareas"
                      sh 'Handle the exception!'
