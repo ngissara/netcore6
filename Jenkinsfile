@@ -27,7 +27,7 @@ pipeline {
                      sh "demo=\$(aws cloudformation describe-stacks --stack-name mystacktestv1 --query Stacks[0].Outputs[0].OutputValue --output text)"
                      sh "${taskDefinition}=$demo"
                      sh "echo ${taskDefinition}"
-                     sh "demo demo"
+                     sh "echo demo demo"
                      sh "echo ${taskDefinition}"
                   } catch (Exception e) {
                      sh "echo error capturando arn definicion de tareas"
