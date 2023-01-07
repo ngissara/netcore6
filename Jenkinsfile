@@ -16,29 +16,6 @@ pipeline {
     }
     stages {
         
-
-        
-        
-                stage("Paso 0 - Lectura de output"){          
-              steps {
-                  script {			
-                  sh "echo 'hola mundo desde GIT'"
-                   try {
-                     sh "demo=\$(aws cloudformation describe-stacks --stack-name mystacktestv1 --query Stacks[0].Outputs[0].OutputValue --output text)"
-                     taskDefinition= sh "echo \$demo"
-                     //sh "echo ${taskDefinition}"
-                     sh "echo demo demo"
-                     sh "echo ${taskDefinition}"
-                  } catch (Exception e) {
-                     sh "echo error capturando arn definicion de tareas"
-                     sh 'Handle the exception!'
-                  }
-                    sh 'Handle the exception!'
-                }
-              }
-        }
-        
-
         stage("Paso 1 - Lectura de parametros"){          
               steps {
                   script {			
@@ -46,8 +23,8 @@ pipeline {
                   //sh "pwd"
                   //sh "ls -ltr"
                   sh "echo '##################Aca podemos hacer lectura de algunos parametros -- ##################' "      
-                  ParametroUno="Esto es el valor del parametro uno";
-                  ParametroDos="Este es el valor del parametros dos";
+                  ParametroUno="134383757275.dkr.ecr.us-east-1.amazonaws.com/juantestrepo1:netcoredemocurso-v6";
+                  ParametroDos="134383757275.dkr.ecr.us-east-1.amazonaws.com/juantestrepo1:netcoredemocurso-v5";
                       
                 }
               }
@@ -83,8 +60,6 @@ pipeline {
                         echo 'Exception occurred: ' + e.toString()
                         //sh 'Handle the exception!'
                     }
-
-
                   sh 'docker run -d --name curso -p 85:80 netcoredemocurso:v6' 
                   sh "echo '################## --- Compilacion exitosa --- #################' "
                 }
@@ -98,22 +73,24 @@ pipeline {
                   sh "echo '####################  --- Cargar imagen docker a AWS ECR --- ###########################'"      
                   sh "echo Login a AWS"
                   sh "aws sts get-caller-identity"
-                  sh "aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 134383757275.dkr.ecr.us-east-1.amazonaws.com"                           
+                  sh "aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 134383757275.dkr.ecr.us-east-1.amazonaws.com" 
+                  //Si en el reposotirio ECR se tiene habilitado la opcion Tag immutability, se debe generar siempre un nuevo nombre o tag a la imagen
                   sh 'docker tag netcoredemocurso:v6 134383757275.dkr.ecr.us-east-1.amazonaws.com/juantestrepo1:netcoredemocurso-v6'    
+                      
                   sh 'docker push 134383757275.dkr.ecr.us-east-1.amazonaws.com/juantestrepo1:netcoredemocurso-v6'
                   sh "echo '################# --- Compilacion exitosa --- #################' "
                   sh "echo '############################ Creacion de stack definicion de tareas ###############################'"
                   
-                  sh "echo aws cloudformation update-stack --stack-name mystacktestv1 --template-body file://infra.json --parameters ParameterKey=ParametroUno,ParameterValue=test1 ParameterKey=ParametroDos,ParameterValue=test2"
+                  sh "echo aws cloudformation update-stack --stack-name mystacktestv1 --template-body file://infra.json --parameters ParameterKey=ParametroUno,ParameterValue=test1 ParameterKey=ParametroDos,ParameterValue=test2"                               
                   try {
                      sh "echo aws cloudformation create-stack --stack-name mystacktestv1 --template-body file://infra.json --parameters ParameterKey=ParametroUno,ParameterValue='${ParametroUno}' ParameterKey=ParametroDos,ParameterValue=${ParametroDos}"
                      sh "aws cloudformation create-stack --stack-name mystacktestv1 --template-body file://infra.json --parameters ParameterKey=ParametroUno,ParameterValue='${ParametroUno}' ParameterKey=ParametroDos,ParameterValue='${ParametroDos}'"
                   } catch (Exception e) {
                      sh "aws cloudformation update-stack --stack-name mystacktestv1 --template-body file://infra.json --parameters ParameterKey=ParametroUno,ParameterValue='${ParametroUno}' ParameterKey=ParametroDos,ParameterValue='${ParametroDos}'"
                   }   
-                      
-                     
-                      
+                 sh "echo ################ -- ver nueva definicion de tarea --####################"
+                 sh "taskDefinition=\$(aws cloudformation describe-stacks --stack-name mystacktestv1 --query Stacks[0].Outputs[0].OutputValue --output text)"           
+                 sh "echo \$taskDefinition"     
                 }
               }
         }
@@ -122,16 +99,14 @@ pipeline {
             
               steps {
                   script {			
-                  sh "echo '####################  --- Capturar valor stack definicion de tareas --- ###########################'"      
-
-                  try {
-                     sh "${taskDefinition}=aws cloudformation describe-stacks --stack-name mystacktestv1 --query "Stacks[0].Outputs[0].TaskDefinitionARN" --output text"
-                     sh "echo ${taskDefinition}"
+                  sh "echo '####################  --- Actualizar servicio --- ###########################'"      
+                   try {
+                     sh "echo aws cloudformation update-stack --stack-name mystacktestv1 --template-body file://infra_service_albalancer_ecs.json --parameters ParameterKey=ParametroUno,ParameterValue='\$taskDefinition' ParameterKey=ParametroDos,ParameterValue='${ParametroDos}'"
+                     sh "aws cloudformation update-stack --stack-name mystacktestv1 --template-body file://infra_service_albalancer_ecs.json --parameters ParameterKey=ParametroUno,ParameterValue='\$taskDefinition' ParameterKey=ParametroDos,ParameterValue='${ParametroDos}'"
                   } catch (Exception e) {
-                     sh "echo error capturando arn definicion de tareas"
+
                   }   
-                      
-                     
+                                      
                       
                 }
               }
