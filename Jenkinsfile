@@ -90,8 +90,8 @@ pipeline {
                   }   
                  sh "sleep 20"     
                  sh "echo ################ -- ver nueva definicion de tarea --####################"
-                 sh "taskDefinition=\$(aws cloudformation describe-stacks --stack-name mystacktestv1 --query Stacks[0].Outputs[0].OutputValue --output text)"           
-                 sh "echo $taskDefinition"     
+                 sh "taskDef=\$(aws cloudformation describe-stacks --stack-name mystacktestv1 --query Stacks[0].Outputs[0].OutputValue --output text)"           
+                 sh "echo $taskDef"     
                 }
               }
         }
@@ -102,8 +102,8 @@ pipeline {
                   script {			
                   sh "echo '####################  --- Actualizar servicio --- ###########################'"      
                    try {
-                     sh "echo aws cloudformation update-stack --stack-name mystacktestv1 --template-body file://infra_service_albalancer_ecs.json --parameters ParameterKey=ParametroUno,ParameterValue='\$taskDefinition' ParameterKey=ParametroDos,ParameterValue='${ParametroDos}'"
-                     sh "aws cloudformation update-stack --stack-name mystacktestv1 --template-body file://infra_service_albalancer_ecs.json --parameters ParameterKey=ParametroUno,ParameterValue='\$taskDefinition' ParameterKey=ParametroDos,ParameterValue='${ParametroDos}'"
+                     sh "echo aws cloudformation update-stack --stack-name mystacktestv1 --template-body file://infra_service_albalancer_ecs.json --parameters ParameterKey=ParametroUno,ParameterValue='\$taskDef' ParameterKey=ParametroDos,ParameterValue='${ParametroDos}'"
+                     sh "aws cloudformation update-stack --stack-name mystacktestv1 --template-body file://infra_service_albalancer_ecs.json --parameters ParameterKey=ParametroUno,ParameterValue='\$taskDef' ParameterKey=ParametroDos,ParameterValue='${ParametroDos}'"
                   } catch (Exception e) {
 
                   }   
