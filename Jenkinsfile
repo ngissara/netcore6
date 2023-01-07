@@ -6,6 +6,7 @@ def jsonParse(def json) {
 
 def ParametroUno
 def ParametroDos
+def taskDefinition
 
 pipeline {
 
@@ -86,6 +87,25 @@ pipeline {
                      sh "aws cloudformation create-stack --stack-name mystacktestv1 --template-body file://infra.json --parameters ParameterKey=ParametroUno,ParameterValue='${ParametroUno}' ParameterKey=ParametroDos,ParameterValue='${ParametroDos}'"
                   } catch (Exception e) {
                      sh "aws cloudformation update-stack --stack-name mystacktestv1 --template-body file://infra.json --parameters ParameterKey=ParametroUno,ParameterValue='${ParametroUno}' ParameterKey=ParametroDos,ParameterValue='${ParametroDos}'"
+                  }   
+                      
+                     
+                      
+                }
+              }
+        }
+
+        stage("paso 5 - Crear servicio ECS"){
+            
+              steps {
+                  script {			
+                  sh "echo '####################  --- Capturar valor stack definicion de tareas --- ###########################'"      
+
+                  try {
+                     sh "${taskDefinition}=aws cloudformation describe-stacks --stack-name mystacktestv1 --query "Stacks[0].Outputs[0].TaskDefinitionARN" --output text"
+                     sh "echo ${taskDefinition}"
+                  } catch (Exception e) {
+                     sh "echo error capturando arn definicion de tareas"
                   }   
                       
                      
