@@ -36,7 +36,7 @@ pipeline {
                      sh "echo error capturando arn definicion de tareas"
                      sh 'Handle the exception!'
                   }
-                    sh 'Handle the exception!'
+                   // sh 'Handle the exception!'
                 }
               }
         }
