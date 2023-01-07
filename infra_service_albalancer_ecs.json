@@ -1,0 +1,166 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "The template used to create an ECS Service from the ECS Console.",
+  "Parameters": {
+    "ECSClusterName": {
+      "Type": "String",
+      "Default": "ClusterCurso"
+    },
+    "SecurityGroupIDs": {
+      "Type": "CommaDelimitedList",
+      "Default": "sg-62dcbe31"
+    },
+    "SubnetIDs": {
+      "Type": "CommaDelimitedList",
+      "Default": "subnet-93c60fde,subnet-591d1977,subnet-74251f28,subnet-55a09e32,subnet-e8733ed6,subnet-ef9c6fe1"
+    },
+    "VpcID": {
+      "Type": "String",
+      "Default": "vpc-08dd9772"
+    },
+    "LoadBalancerName": {
+      "Type": "String",
+      "Default": "AlbCurso"
+    }
+  },
+  "Resources": {
+    "ECSService": {
+      "Type": "AWS::ECS::Service",
+      "Properties": {
+        "Cluster": "ClusterCurso",
+        "TaskDefinition": "arn:aws:ecs:us-east-1:134383757275:task-definition/DefinicionCursoTestV1:1",
+        "LaunchType": "EC2",
+        "ServiceName": "ServicioUnoCurso",
+        "SchedulingStrategy": "REPLICA",
+        "DesiredCount": 1,
+        "LoadBalancers": [
+          {
+            "ContainerName": "API-REST-NETCORE-6-2",
+            "ContainerPort": 80,
+            "LoadBalancerName": {
+              "Ref": "AWS::NoValue"
+            },
+            "TargetGroupArn": {
+              "Ref": "TargetGroup"
+            }
+          }
+        ],
+        "HealthCheckGracePeriodSeconds": "5",
+        "DeploymentConfiguration": {
+          "MaximumPercent": 200,
+          "MinimumHealthyPercent": 100,
+          "DeploymentCircuitBreaker": {
+            "Enable": true,
+            "Rollback": true
+          }
+        },
+        "DeploymentController": {
+          "Type": "ECS"
+        },
+        "ServiceConnectConfiguration": {
+          "Enabled": false
+        },
+        "PlacementStrategies": [
+          {
+            "Field": "attribute:ecs.availability-zone",
+            "Type": "spread"
+          },
+          {
+            "Field": "instanceId",
+            "Type": "spread"
+          }
+        ],
+        "PlacementConstraints": [],
+        "Tags": [
+          {
+            "Key": "ecs:service:stackId",
+            "Value": {
+              "Ref": "AWS::StackId"
+            }
+          }
+        ],
+        "EnableECSManagedTags": true
+      },
+      "DependsOn": [
+        "Listener"
+      ]
+    },
+    "LoadBalancer": {
+      "Type": "AWS::ElasticLoadBalancingV2::LoadBalancer",
+      "Properties": {
+        "Type": "application",
+        "Name": "AlbCurso",
+        "SecurityGroups": {
+          "Ref": "SecurityGroupIDs"
+        },
+        "Subnets": {
+          "Ref": "SubnetIDs"
+        }
+      }
+    },
+    "TargetGroup": {
+      "Type": "AWS::ElasticLoadBalancingV2::TargetGroup",
+      "Properties": {
+        "HealthCheckPath": "/WeatherForecast",
+        "Name": "TargetGroupAlbCurso",
+        "Port": "83",
+        "Protocol": "HTTP",
+        "TargetType": "instance",
+        "HealthCheckProtocol": "HTTP",
+        "VpcId": {
+          "Ref": "VpcID"
+        }
+      }
+    },
+    "Listener": {
+      "Type": "AWS::ElasticLoadBalancingV2::Listener",
+      "Properties": {
+        "DefaultActions": [
+          {
+            "Type": "forward",
+            "TargetGroupArn": {
+              "Ref": "TargetGroup"
+            }
+          }
+        ],
+        "LoadBalancerArn": {
+          "Ref": "LoadBalancer"
+        },
+        "Port": "83",
+        "Protocol": "HTTP"
+      }
+    }
+  },
+  "Outputs": {
+    "ClusterName": {
+      "Description": "The cluster used to create the service.",
+      "Value": {
+        "Ref": "ECSClusterName"
+      }
+    },
+    "ECSService": {
+      "Description": "The created service.",
+      "Value": {
+        "Ref": "ECSService"
+      }
+    },
+    "LoadBalancer": {
+      "Description": "The created load balancer.",
+      "Value": {
+        "Ref": "LoadBalancer"
+      }
+    },
+    "Listener": {
+      "Description": "The created listener.",
+      "Value": {
+        "Ref": "Listener"
+      }
+    },
+    "TargetGroup": {
+      "Description": "The created target group.",
+      "Value": {
+        "Ref": "TargetGroup"
+      }
+    }
+  }
+}
