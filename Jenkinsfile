@@ -10,7 +10,7 @@ def task
 def BUILDVERSION
 def taskRun
 String stringCode="";
-def tagActualizar="id";
+def tagActualizar="VersionCode";
 
 pipeline {
 
@@ -32,16 +32,25 @@ pipeline {
                       str = a.split(',');
                        //int b=0;
                        for( String values : str ){
-                           //Values es el arn de cada lambda
-                           println(values);                               
-                           def codeVersion = sh(script: "aws lambda list-tags --resource ${values}|grep -o '\"${tagActualizar}\": \"[^\"]*' |grep -o '[^\"]*\$'", returnStdout: true).trim()
-                           //sh "aws lambda list-tags --resource ${values}|grep -o '\"id\": \"[^\"]*' |grep -o '[^\"]*\$'";                             
-                           def valor=values+'='+codeVersion+';';   
-                           println(valor);
-                           stringCode = stringCode+valor;
-                           //Supongo que aca se actualiza las lambdas cuando se hace deploy de la infra
-                           def codeFuncionUpdate="1.0.0";
-                           sh "aws lambda tag-resource --resource ${values} --tags ${tagActualizar}='${codeFuncionUpdate}'"
+                           try {  
+                               //Values es el arn de cada lambda
+                               println(values);                               
+                               def codeVersion = sh(script: "aws lambda list-tags --resource ${values}|grep -o '\"${tagActualizar}\": \"[^\"]*' |grep -o '[^\"]*\$'", returnStdout: true).trim()
+                               //sh "aws lambda list-tags --resource ${values}|grep -o '\"id\": \"[^\"]*' |grep -o '[^\"]*\$'";                             
+                               def valor=values+'='+codeVersion+';';   
+                               println(valor);
+                               stringCode = stringCode+valor;
+                               //Supongo que aca se actualiza las lambdas cuando se hace deploy de la infra
+                               def codeFuncionUpdate="1.0.0";
+                               sh "aws lambda tag-resource --resource ${values} --tags ${tagActualizar}='${codeFuncionUpdate}'"
+                           }catch (Exception e) {
+                              sh "echo error capturando el tag, no existe"
+                              def codeFuncionUpdate="1.0.0";                      
+                              def valor=values+'='+codeFuncionUpdate+';';   
+                              println(valor);
+                              stringCode = stringCode+valor;
+                              sh "aws lambda tag-resource --resource ${values} --tags ${tagActualizar}='${codeFuncionUpdate}'"                           
+                          }                                                      
                            //b++;
                        }  
                        sh "echo Termina ejecucion"
@@ -49,9 +58,7 @@ pipeline {
                        //sh "echo ${stringCode}"
                       
                        sh "echo 'Se espera a que se validen los datos actuales'"
-                       sh "sleep 60"
-                       
-                       
+                       sh "sleep 60"                                         
                            
                   } catch (Exception e) {
                      sh "echo error capturando arn definicion de tareas"
@@ -80,8 +87,7 @@ pipeline {
                            println("Funcion:"+arnFuncion);
                            println("Code:"+codeFuncion);                           
                            //Lanzar codigo actualizar lambda code     
-                           sh "aws lambda tag-resource --resource ${arnFuncion} --tags VersionCode='${codeFuncion}'"
-                           
+                           sh "aws lambda tag-resource --resource ${arnFuncion} --tags ${tagActualizar}='${codeFuncion}'"                        
                        }  
                        sh "echo Termina ejecucion update lambdacodeversion"                                           
                   } catch (Exception e) {
