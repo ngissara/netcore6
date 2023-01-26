@@ -67,6 +67,18 @@ pipeline {
                       str = a.split(';');                       
                        for( String values : str ){
                            println('Lambda arn mas codigo:'+values);    
+                           //Se realiza un split para separar arn y codigo
+                           String[] strArnCode;
+                           strArnCode = values.split('=');
+                           def arnFuncion=strArnCode[0];
+                           def codeFuncion=strArnCode[1];
+                           println("Funcion:"+arnFuncion);
+                           println("Code:"+codeFuncion);
+                           
+                           //for( String valuesArnCode : strArnCode ){
+                               
+                           //}
+                           
                            //Lanzar codigo actualizar lambda code                            
                        }  
                        sh "echo Termina ejecucion update lambdacodeversion"                                           
