@@ -36,7 +36,7 @@ pipeline {
                                //Values es el arn de cada lambda
                                println(values);                               
                                def codeVersion = sh(script: "aws lambda get-function --function-name ${values}|grep -o '\"${tagActualizar}\": \"[^\"]*' |grep -o '[^\"]*\$'", returnStdout: true).trim()
-                               def arnFunction = sh(script: "aws lambda get-function --function-name ${values}|grep -o '\"${FunctionArn}\": \"[^\"]*' |grep -o '[^\"]*\$'", returnStdout: true).trim()
+                               def arnFunction = sh(script: "aws lambda get-function --function-name ${values}|grep -o '\"FunctionArn\": \"[^\"]*' |grep -o '[^\"]*\$'", returnStdout: true).trim()
                                
                                //sh "aws lambda list-tags --resource ${values}|grep -o '\"id\": \"[^\"]*' |grep -o '[^\"]*\$'";                             
                                def valor=arnFunction+'='+codeVersion+';';   
