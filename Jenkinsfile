@@ -37,7 +37,6 @@ pipeline {
                            println(values);    
                            sh "aws lambda list-tags --resource ${values}|grep -o '\"id\": \"[^\"]*' |grep -o '[^\"]*\$'";                  
                            //stringCode=stringCode+';'+ values+'='+b;   
-                           stringCode = stringCode.concat("");
                            stringCode = stringCode.concat(values);
                            stringCode = stringCode.concat("=");
                            stringCode = stringCode.concat(b);
