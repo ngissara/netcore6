@@ -19,6 +19,23 @@ pipeline {
     stages {
         
         
+          stage("Paso lectura TAGs lambdas"){          
+              steps {
+                  script {			
+                  sh "echo 'Inicio lectura de TAGS'"
+                   try {
+                     sh "aws lambda list-tags --resource arn:aws:lambda:us-east-1:134383757275:function:test"
+                     //sh "echo fecha: ${BUILDVERSION}"
+
+                           
+                  } catch (Exception e) {
+                     sh "echo error capturando arn definicion de tareas"
+                     sh 'Handle the exception!'
+                  }
+                  //sh 'Handle the exception!'
+                }
+              }
+        }
       
         
         
