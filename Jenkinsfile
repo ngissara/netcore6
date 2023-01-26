@@ -9,7 +9,7 @@ def ParametroDos
 def task
 def BUILDVERSION
 def taskRun
-def stringCode="Datos;";
+String stringCode="Datos;";
 
 pipeline {
 
