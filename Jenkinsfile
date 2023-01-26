@@ -32,12 +32,12 @@ pipeline {
                       String a = "arn:aws:lambda:us-east-1:134383757275:function:test, arn:aws:lambda:us-east-1:134383757275:function:GreetingLambda, arn:aws:lambda:us-east-1:134383757275:function:ApagarEC2";
                       String[] str;
                       str = a.split(',');
-                       int a=0;
+                       int b=0;
                        for( String values : str ){
                            println(values);    
                            sh "aws lambda list-tags --resource ${values}|grep -o '\"id\": \"[^\"]*' |grep -o '[^\"]*\$'"
-                           stringCode=stringCode+values + '='+a;
-                           a++;
+                           stringCode=stringCode+values + '='+b;
+                           b++;
                        }  
                        
                        
