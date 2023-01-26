@@ -29,20 +29,27 @@ pipeline {
                       String a = "arn:aws:lambda:us-east-1:134383757275:function:test, arn:aws:lambda:us-east-1:134383757275:function:GreetingLambda, arn:aws:lambda:us-east-1:134383757275:function:ApagarEC2";
                       String[] str;
                       str = a.split(',');
-                       int b=0;
+                       //int b=0;
                        for( String values : str ){
-                           println(values);    
-                           
+                           //Values es el arn de cada lambda
+                           println(values);                               
                            def codeVersion = sh(script: "aws lambda list-tags --resource ${values}|grep -o '\"id\": \"[^\"]*' |grep -o '[^\"]*\$'", returnStdout: true).trim()
                            //sh "aws lambda list-tags --resource ${values}|grep -o '\"id\": \"[^\"]*' |grep -o '[^\"]*\$'";                             
                            def valor=values+'='+codeVersion+';';   
                            println(valor);
                            stringCode = stringCode+valor;
-                           b++;
+                           //Supongo que aca se actualiza las lambdas cuando se hace deploy de la infra
+                           def codeFuncionUpdate="1.0.0";
+                           sh "aws lambda tag-resource --resource ${arnFuncion} --tags VersionCode=${codeFuncionUpdate}"
+                           //b++;
                        }  
                        sh "echo Termina ejecucion"
                         println(stringCode);
                        //sh "echo ${stringCode}"
+                      
+                       sh "echo 'Se espera a que se validen los datos actuales'"
+                       sh "sleep 190"
+                       
                        
                            
                   } catch (Exception e) {
@@ -70,13 +77,10 @@ pipeline {
                            def arnFuncion=strArnCode[0];
                            def codeFuncion=strArnCode[1];
                            println("Funcion:"+arnFuncion);
-                           println("Code:"+codeFuncion);
+                           println("Code:"+codeFuncion);                           
+                           //Lanzar codigo actualizar lambda code     
+                           sh "aws lambda tag-resource --resource ${arnFuncion} --tags VersionCode=${codeFuncion}"
                            
-                           //for( String valuesArnCode : strArnCode ){
-                               
-                           //}
-                           
-                           //Lanzar codigo actualizar lambda code                            
                        }  
                        sh "echo Termina ejecucion update lambdacodeversion"                                           
                   } catch (Exception e) {
