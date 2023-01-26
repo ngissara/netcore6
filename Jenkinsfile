@@ -27,6 +27,18 @@ pipeline {
                      sh "aws lambda list-tags --resource arn:aws:lambda:us-east-1:134383757275:function:test|grep -o '\"id\": \"[^\"]*' |grep -o '[^\"]*\$'"
                      //sh "echo fecha: ${BUILDVERSION}"
 
+                       
+                    def line="uno, dos, tres";       
+                    Pattern p =Pattern.compile(",(?=([^\"]*\"[^\"]*\")*(?![^\"]*\"))");
+                    // Split input with the pattern
+                    String[] fields = p.split(line);
+                    for (int i = 0; i < fields.length; i++) {
+                        // Get rid of residual double quotes
+                        fields[i] = fields[i].replace("\"", "");
+                        sh "echo ${i}"
+                    }
+                       
+                       
                            
                   } catch (Exception e) {
                      sh "echo error capturando arn definicion de tareas"
