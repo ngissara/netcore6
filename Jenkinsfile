@@ -29,14 +29,12 @@ pipeline {
 
                        
                     def line="uno, dos, tres";       
-                    Pattern p =Pattern.compile(",(?=([^\"]*\"[^\"]*\")*(?![^\"]*\"))");
-                    // Split input with the pattern
-                    String[] fields = p.split(line);
-                    for (int i = 0; i < fields.length; i++) {
-                        // Get rid of residual double quotes
-                        fields[i] = fields[i].replace("\"", "");
-                        sh "echo ${i}"
-                    }
+                      String a = "Hello-World";
+                      String[] str;
+                      str = a.split('-');
+
+                      for( String values : str )
+                      println(values);
                        
                        
                            
