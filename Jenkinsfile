@@ -27,14 +27,13 @@ pipeline {
                      sh "aws lambda list-tags --resource arn:aws:lambda:us-east-1:134383757275:function:test|grep -o '\"id\": \"[^\"]*' |grep -o '[^\"]*\$'"
                      //sh "echo fecha: ${BUILDVERSION}"
 
-                       
-                    def line="uno, dos, tres";       
-                      String a = "Hello-World";
+                             
+                      String a = "arn:aws:lambda:us-east-1:134383757275:function:test, arn:aws:lambda:us-east-1:134383757275:function:GreetingLambda, arn:aws:lambda:us-east-1:134383757275:function:ApagarEC2";
                       String[] str;
-                      str = a.split('-');
-
-                      for( String values : str )
-                      println(values);
+                      str = a.split(',');
+                       for( String values : str ){
+                        println(values);              
+                       } 
                        
                        
                            
