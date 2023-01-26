@@ -36,7 +36,7 @@ pipeline {
                        for( String values : str ){
                            println(values);    
                            sh "aws lambda list-tags --resource ${values}|grep -o '\"id\": \"[^\"]*' |grep -o '[^\"]*\$'";                  
-                
+                           stringCode='My name is ' + value;   
                            b++;
                        }  
                        sh "echo ${stringCode}"
