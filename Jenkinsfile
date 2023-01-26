@@ -41,7 +41,7 @@ pipeline {
                            stringCode = stringCode+valor;
                            //Supongo que aca se actualiza las lambdas cuando se hace deploy de la infra
                            def codeFuncionUpdate="1.0.0";
-                           sh "aws lambda tag-resource --resource ${values} --tags ${tagActualizar}=${codeFuncionUpdate}"
+                           sh "aws lambda tag-resource --resource ${values} --tags ${tagActualizar}='${codeFuncionUpdate}'"
                            //b++;
                        }  
                        sh "echo Termina ejecucion"
@@ -49,7 +49,7 @@ pipeline {
                        //sh "echo ${stringCode}"
                       
                        sh "echo 'Se espera a que se validen los datos actuales'"
-                       sh "sleep 190"
+                       sh "sleep 60"
                        
                        
                            
@@ -80,7 +80,7 @@ pipeline {
                            println("Funcion:"+arnFuncion);
                            println("Code:"+codeFuncion);                           
                            //Lanzar codigo actualizar lambda code     
-                           sh "aws lambda tag-resource --resource ${arnFuncion} --tags VersionCode=${codeFuncion}"
+                           sh "aws lambda tag-resource --resource ${arnFuncion} --tags VersionCode='${codeFuncion}'"
                            
                        }  
                        sh "echo Termina ejecucion update lambdacodeversion"                                           
