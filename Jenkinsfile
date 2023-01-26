@@ -36,9 +36,10 @@ pipeline {
                        for( String values : str ){
                            println(values);    
                            sh "aws lambda list-tags --resource ${values}|grep -o '\"id\": \"[^\"]*' |grep -o '[^\"]*\$'";                  
-                           def valor=';'+values+'='+b;   
+                           def valor=values+'='+b+';';   
                            println(valor);
-                           stringCode = stringCode.concat(valor);
+                           stringCode = stringCode+valor;
+                           //stringCode = stringCode.concat(valor);
                            //stringCode = stringCode.concat("_");
                            b++;
                        }  
