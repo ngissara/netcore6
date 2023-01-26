@@ -31,7 +31,7 @@ pipeline {
                      //sh "taskDef=\$(aws cloudformation describe-stacks --stack-name mystacktestv1 --query Stacks[0].Outputs[0].OutputValue --output text)"  
                      //task= sh(script: "aws cloudformation describe-stacks --stack-name mystacktestv1 --query Stacks[0].Outputs[0].OutputValue --output text", returnStdout: true).trim()
                      sh "echo fecha: ${BUILDVERSION}"
-                     //sh "echo task: ${task}"
+                     //sh "echo task: ${task}"..
                      //taskRun = sh(script: "aws ecs list-tasks --cluster 'ClusterCurso' --service 'ServicioUnoCurso' --output text --query taskArns[0]", returnStdout: true).trim()
                      //sh "aws ecs stop-task --cluster ClusterCurso --task ${taskRun}"
                            
