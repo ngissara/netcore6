@@ -24,23 +24,20 @@ pipeline {
               steps {
                   script {			
                   sh "echo 'Inicio lectura de TAGS'"
-                   try {
-                     
-                     //sh "echo fecha: ${BUILDVERSION}"
-
-                             
+                   try {             
+                     //sh "echo fecha: ${BUILDVERSION}"                  
                       String a = "arn:aws:lambda:us-east-1:134383757275:function:test, arn:aws:lambda:us-east-1:134383757275:function:GreetingLambda, arn:aws:lambda:us-east-1:134383757275:function:ApagarEC2";
                       String[] str;
                       str = a.split(',');
                        int b=0;
                        for( String values : str ){
                            println(values);    
-                           sh "aws lambda list-tags --resource ${values}|grep -o '\"id\": \"[^\"]*' |grep -o '[^\"]*\$'";                  
-                           def valor=values+'='+b+';';   
+                           
+                           def codeVersion = sh(script: "aws lambda list-tags --resource ${values}|grep -o '\"id\": \"[^\"]*' |grep -o '[^\"]*\$'", returnStdout: true).trim()
+                           //sh "aws lambda list-tags --resource ${values}|grep -o '\"id\": \"[^\"]*' |grep -o '[^\"]*\$'";                             
+                           def valor=values+'='+codeVersion+';';   
                            println(valor);
                            stringCode = stringCode+valor;
-                           //stringCode = stringCode.concat(valor);
-                           //stringCode = stringCode.concat("_");
                            b++;
                        }  
                        sh "echo Termina ejecucion"
