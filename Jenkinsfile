@@ -10,6 +10,7 @@ def task
 def BUILDVERSION
 def taskRun
 String stringCode="";
+def tagActualizar="id";
 
 pipeline {
 
@@ -33,14 +34,14 @@ pipeline {
                        for( String values : str ){
                            //Values es el arn de cada lambda
                            println(values);                               
-                           def codeVersion = sh(script: "aws lambda list-tags --resource ${values}|grep -o '\"id\": \"[^\"]*' |grep -o '[^\"]*\$'", returnStdout: true).trim()
+                           def codeVersion = sh(script: "aws lambda list-tags --resource ${values}|grep -o '\"${tagActualizar}\": \"[^\"]*' |grep -o '[^\"]*\$'", returnStdout: true).trim()
                            //sh "aws lambda list-tags --resource ${values}|grep -o '\"id\": \"[^\"]*' |grep -o '[^\"]*\$'";                             
                            def valor=values+'='+codeVersion+';';   
                            println(valor);
                            stringCode = stringCode+valor;
                            //Supongo que aca se actualiza las lambdas cuando se hace deploy de la infra
                            def codeFuncionUpdate="1.0.0";
-                           sh "aws lambda tag-resource --resource ${values} --tags VersionCode=${codeFuncionUpdate}"
+                           sh "aws lambda tag-resource --resource ${values} --tags ${tagActualizar}=${codeFuncionUpdate}"
                            //b++;
                        }  
                        sh "echo Termina ejecucion"
