@@ -56,7 +56,28 @@ pipeline {
                 }
               }
         }
-      
+       
+            stage("Paso lectura TAGs lambdas  mas Codigo tag"){          
+              steps {
+                  script {			
+                  sh "echo 'Inicio lectura de TAGS'"
+                   try {     
+                      String a = stringCode;
+                      String[] str;
+                      str = a.split(';');                       
+                       for( String values : str ){
+                           println('Lambda arn mas codigo:'+values);    
+                           //Lanzar codigo actualizar lambda code                            
+                       }  
+                       sh "echo Termina ejecucion update lambdacodeversion"                                           
+                  } catch (Exception e) {
+                     sh "echo error capturando arn definicion de tareas"
+                     sh 'Handle the exception!'
+                  }
+                  //sh 'Handle the exception!'
+                }
+              }
+        }
         
         
          stage("Paso 0 - Captura fecha"){          
