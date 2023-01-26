@@ -24,7 +24,7 @@ pipeline {
                   script {			
                   sh "echo 'Inicio lectura de TAGS'"
                    try {
-                     sh "aws lambda list-tags --resource arn:aws:lambda:us-east-1:134383757275:function:test|grep -o '\"id\": \"[^\"]*' |grep -o '[^\"]'"
+                     sh "aws lambda list-tags --resource arn:aws:lambda:us-east-1:134383757275:function:test|grep -o '\"id\": \"[^\"]*' |grep -o '[^\"]*'"
                      //sh "echo fecha: ${BUILDVERSION}"
 
                            
