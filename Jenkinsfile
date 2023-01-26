@@ -27,7 +27,7 @@ pipeline {
                   sh "echo 'Inicio lectura de TAGS'"
                    try {             
                      //sh "echo fecha: ${BUILDVERSION}"                  
-                      String a = "arn:aws:lambda:us-east-1:134383757275:function:test, arn:aws:lambda:us-east-1:134383757275:function:GreetingLambda, arn:aws:lambda:us-east-1:134383757275:function:ApagarEC2";
+                      String a = "test,GreetingLambda,ApagarEC2";
                       String[] str;
                       str = a.split(',');
                        //int b=0;
@@ -35,9 +35,11 @@ pipeline {
                            try {  
                                //Values es el arn de cada lambda
                                println(values);                               
-                               def codeVersion = sh(script: "aws lambda list-tags --resource ${values}|grep -o '\"${tagActualizar}\": \"[^\"]*' |grep -o '[^\"]*\$'", returnStdout: true).trim()
+                               def codeVersion = sh(script: "aws lambda get-function --function-name ${values}|grep -o '\"${tagActualizar}\": \"[^\"]*' |grep -o '[^\"]*\$'", returnStdout: true).trim()
+                               def arnFunction = sh(script: "aws lambda get-function --function-name ${values}|grep -o '\"${FunctionArn}\": \"[^\"]*' |grep -o '[^\"]*\$'", returnStdout: true).trim()
+                               
                                //sh "aws lambda list-tags --resource ${values}|grep -o '\"id\": \"[^\"]*' |grep -o '[^\"]*\$'";                             
-                               def valor=values+'='+codeVersion+';';   
+                               def valor=arnFunction+'='+codeVersion+';';   
                                println(valor);
                                stringCode = stringCode+valor;
                                //Supongo que aca se actualiza las lambdas cuando se hace deploy de la infra
@@ -45,11 +47,12 @@ pipeline {
                                sh "aws lambda tag-resource --resource ${values} --tags ${tagActualizar}='${codeFuncionUpdate}'"
                            }catch (Exception e) {
                               sh "echo error capturando el tag, no existe"
-                              def codeFuncionUpdate="1.0.0";                      
-                              def valor=values+'='+codeFuncionUpdate+';';   
+                              def codeFuncionUpdate="1.0.0";
+                              def arnFunction = sh(script: "aws lambda get-function --function-name ${values}|grep -o '\"${FunctionArn}\": \"[^\"]*' |grep -o '[^\"]*\$'", returnStdout: true).trim()                               
+                              def valor=arnFunction+'='+codeFuncionUpdate+';';   
                               println(valor);
-                              stringCode = stringCode+valor;
-                              sh "aws lambda tag-resource --resource ${values} --tags ${tagActualizar}='${codeFuncionUpdate}'"                           
+                              stringCode = stringCode+valor;                           
+                              sh "aws lambda tag-resource --resource ${arnFunction} --tags ${tagActualizar}='${codeFuncionUpdate}'"                           
                           }                                                      
                            //b++;
                        }  
