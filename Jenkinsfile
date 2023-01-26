@@ -44,7 +44,7 @@ pipeline {
                                stringCode = stringCode+valor;
                                //Supongo que aca se actualiza las lambdas cuando se hace deploy de la infra
                                def codeFuncionUpdate="1.0.0";
-                               sh "aws lambda tag-resource --resource ${values} --tags ${tagActualizar}='${codeFuncionUpdate}'"
+                               sh "aws lambda tag-resource --resource ${arnFunction} --tags ${tagActualizar}='${codeFuncionUpdate}'"
                            }catch (Exception e) {
                               sh "echo error capturando el tag, no existe"
                               def codeFuncionUpdate="1.0.0";
