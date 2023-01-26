@@ -73,7 +73,7 @@ pipeline {
                   sh 'jar -cf HolaMundo.jar HolaMundo.class'    
                   sh 'jar cmf temp.mf HolaMundo.jar HolaMundo.class'
                   sh 'java -jar HolaMundo.jar'
-                  sh "echo '####Compilacion exitosa ###' "
+                  sh "echo '####Compilacion exitosa.. ###' "
                   sh 'cp HolaMundo.jar /tmp/'
                 }
               }
