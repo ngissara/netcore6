@@ -39,7 +39,7 @@ pipeline {
                            stringCode=stringCode+values + '='+b;
                            b++;
                        }  
-                       
+                       sh "echo ${stringCode}"
                        
                            
                   } catch (Exception e) {
