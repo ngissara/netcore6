@@ -43,7 +43,8 @@ pipeline {
                            b++;
                        }  
                        sh "echo Termina ejecucion"
-                       sh "echo ${stringCode}"
+                        println(stringCode);
+                       //sh "echo ${stringCode}"
                        
                            
                   } catch (Exception e) {
