@@ -1,0 +1,88 @@
+var aws = require("aws-sdk");
+var ses = new aws.SES({ region: "us-east-1" });
+
+var mimemessage = require('mimemessage');
+
+var mailContent = mimemessage.factory({contentType: 'multipart/mixed',body: []});
+
+mailContent.header('From', 'emailorigen@gmail.com');
+mailContent.header('To','emaildestino@gmail.com');
+mailContent.header('Subject', 'Envio informe s3 backup');
+
+var alternateEntity = mimemessage.factory({
+    contentType: 'multipart/alternate',
+    body: []
+});
+
+const s3 = new aws.S3();
+var BucketName
+var keyObject
+var theObject
+var base64data
+
+exports.handler = async (event) => {
+    
+
+console.info("########################### NOMBRE DEL BUCKET ##################################\n" + BucketName)
+
+BucketName = event.Records[0].s3.bucket.name;
+keyObject = event.Records[0].s3.object.key;
+var getParams = {
+    Bucket: BucketName, 
+    Key: keyObject
+}    
+
+theObject = await s3.getObject(getParams).promise();
+var objString= theObject.Body.toString('utf-8');
+base64data =Buffer.from(objString).toString('base64')
+
+
+var htmlEntity = mimemessage.factory({
+   contentType: 'text/html;charset=utf-8',
+   body:  '   <html>  '  +
+          '   <head></head>  '  +
+          '   <body>  '  +
+          '   <h1>Hello esto es un envio de un fichero!</h1>  '  +
+          '   <p>Bucket: </p>  '  +BucketName+
+          '   <p>Objecto: </p>  '  +keyObject+
+          '   </body>  '  +
+          '  </html>  '
+ });
+
+var plainEntity = mimemessage.factory({
+   body: 'Please see the attached file for a list of    customers to contact.'
+});
+
+alternateEntity.body.push(htmlEntity);
+//alternateEntity.body.push("HOLA DESDE LAMBDA");
+
+
+mailContent.body.push(alternateEntity);
+
+
+
+var attachmentEntity = mimemessage.factory({
+contentType: 'text/plain',
+contentTransferEncoding: 'base64',
+body: base64data
+});
+
+attachmentEntity.header('Content-Disposition', 'attachment ;filename="customers.txt"');
+ 
+mailContent.body.push(attachmentEntity);
+
+
+
+    // Send the actual email
+    await ses.sendRawEmail( {
+        RawMessage: {
+            Data: mailContent.toString()
+        },
+        Tags: [
+            // ... optional email tags
+        ]
+
+    } ).promise();
+
+ 
+}
