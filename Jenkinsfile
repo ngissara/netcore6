@@ -24,7 +24,7 @@ pipeline {
 
         stage("Invocar libreria global"){          
               steps {
-                  Hola("Juan Guillermo ");
+                  hola("Juan Guillermo ");
               }
         }
         
