@@ -1,4 +1,5 @@
 import groovy.json.JsonSlurperClassic
+@Library(LibreriaGlobal) _
 
 def jsonParse(def json) {
     new groovy.json.JsonSlurperClassic().parseText(json)
@@ -19,7 +20,12 @@ pipeline {
         appName = "variable" 
     }
     stages {
-        
+
+        stage("Invocar libreria global"){          
+              steps {
+                  Hola("Juan Guillermo ");
+              }
+        }
         
           stage("Paso lectura TAGs lambdas"){          
               steps {
