@@ -1,5 +1,6 @@
+@Library('LibreriaGlobal') _
 import groovy.json.JsonSlurperClassic
-@Library(LibreriaGlobal) _
+
 
 def jsonParse(def json) {
     new groovy.json.JsonSlurperClassic().parseText(json)
